@@ -1,11 +1,52 @@
 print("Welcome to the UW Calculator Playground")
 
 func calculate(_ args: [String]) -> Int {
-    return -1
+    
+    if args.count == 1 {
+        return 0
+    }
+    switch args.last {
+    case "count":
+        return args.count - 1
+    case "avg":
+        var sum = 0
+        for i in 0..<(args.count){
+            sum += (Int(args[i]) ?? 0)
+        }
+        return sum / (args.count - 1)
+    case "fact":
+        if Int(args[0]) == 0 {
+            return 1
+        } else {
+            var x = 1
+            for i in 1...(Int(args[0]) ?? 0) {
+                x *= i
+            }
+            return x
+        }
+    default:
+        let first : Int! = Int(args[0])
+        let second : Int! = Int(args[2])
+        switch args[1] {
+        case "+": return first + second
+        case "-": return first - second
+        case "*": return first * second
+        case "/": return first / second
+        case "%": return first % second
+        default:
+            print("Invalid Input, Please Enter Again")
+            return -1
+        }
+    }
 }
 
 func calculate(_ arg: String) -> Int {
-    return -1
+    let arraySubstrings = arg.split(separator: " ")
+    var arrayStrings: [String] = []
+    for item in arraySubstrings {
+        arrayStrings.append("\(item)")
+    }
+    return calculate(arrayStrings)
 }
 
 // -------------------------------------------
