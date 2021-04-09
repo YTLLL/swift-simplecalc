@@ -94,7 +94,7 @@ calculate("5 fact") == 120
 
 // Implement calculate([String]) and calculate(String)
 // to handle negative numbers
-/*
+
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
 calculate(["2", "*", "-2"]) == -4
@@ -109,23 +109,53 @@ calculate("2 - -2") == 4
 calculate("-2 / 2") == -1
 
 calculate("1 -2 3 -4 5 count") == 5
-*/
+
  
 // Implement calculate([String]) and calculate(String)
 // to use floating-point values
-/*
-func calculate(_ args: [String]) -> Double {
-    return -1.0
+
+func calculateDouble(_ args: [String]) -> Double {
+    if args.count == 1 {
+        return 0.0
+    }
+    switch args.last {
+    case "count":
+        return Double(args.count) - 1.0
+    case "avg":
+        var sum = 0.0
+        for i in 0..<(args.count){
+            sum += (Double(args[i]) ?? 0.0)
+        }
+        return sum / (Double(args.count) - 1.0)
+    default:
+        let first : Double! = Double(args[0])
+        let second : Double! = Double(args[2])
+        switch args[1] {
+        case "+": return first + second
+        case "-": return first - second
+        case "*": return first * second
+        case "/": return first / second
+        case "%": return first.truncatingRemainder(dividingBy: second)
+        default:
+            print("Invalid Input, Please Enter Again")
+            return -1.0
+        }
+    }
 }
-func calculate(_ arg: String) -> Double {
-    return -1.0
+func calculateDoubleString(_ arg: String) -> Double {
+    let arraySubstrings = arg.split(separator: " ")
+    var arrayStrings: [String] = []
+    for item in arraySubstrings {
+        arrayStrings.append("\(item)")
+    }
+    return calculateDouble(arrayStrings)
 }
 
-calculate(["2.0", "+", "2.0"]) == 4.0
-calculate([".5", "+", "1.5"]) == 2.0
-calculate(["12.0", "-", "12.0"]) == 0.0
-calculate(["2.5", "*", "2.5"]) == 6.25
-calculate(["2.0", "/", "2.0"]) == 1.0
-calculate(["2.0", "%", "2.0"]) == 0.0
-calculate("1.0 2.0 3.0 4.0 5.0 count") == 5
-*/
+calculateDouble(["2.0", "+", "2.0"]) == 4.0
+calculateDouble([".5", "+", "1.5"]) == 2.0
+calculateDouble(["12.0", "-", "12.0"]) == 0.0
+calculateDouble(["2.5", "*", "2.5"]) == 6.25
+calculateDouble(["2.0", "/", "2.0"]) == 1.0
+calculateDouble(["2.0", "%", "2.0"]) == 0.0
+calculateDoubleString("1.0 2.0 3.0 4.0 5.0 count") == 5
+
